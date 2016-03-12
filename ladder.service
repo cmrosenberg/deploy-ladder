@@ -1,0 +1,16 @@
+[Unit]
+Description=Programming Ladder, a Project Euler clone
+
+[Service]
+Restart=always
+Type=simple
+User=ladder
+Group=ladder
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=ladder
+WorkingDirectory=/home/ladder/programming-ladder
+ExecStart=/usr/local/bin/meteor
+
+[Install]
+WantedBy=multi-user.target

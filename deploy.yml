@@ -1,0 +1,91 @@
+- name: Install Programming Ladder
+  hosts: digitalocean
+  vars:
+      ladder_url: https://github.com/MAPSuio/programming-ladder.git
+  tasks:
+
+      - name: Install system dependencies
+        become: yes
+        become_user: root
+        apt:
+            name: "{{ item }}"
+            state: present
+        with_items:
+            - curl
+            - git
+
+      - name: Add a regular user for running programming ladder
+        become: yes
+        become_user: root
+        user:
+            name: ladder
+            shell: /bin/bash
+            state: present
+
+      - name: Download meteor
+        become: yes
+        become_user: root
+        get_url:
+            url: https://install.meteor.com
+            dest: /root/installation_script
+
+      - name: Check if meteor is already installed
+        become: yes
+        become_user: root
+        stat:
+            path: /root/.meteor
+        register: meteor_state
+
+      - name: Make meteor install script executable
+        become: yes
+        become_user: root
+        file:
+            path: /root/installation_script
+            mode: 0755
+        when: not meteor_state.stat.exists
+
+      - name: Install meteor
+        become: yes
+        become_user: root
+        shell: ./installation_script
+        args:
+            chdir: /root/
+        when: not meteor_state.stat.exists
+
+      - name: Clone programming ladder repository
+        become: yes
+        become_user: ladder
+        git:
+            repo: "{{ ladder_url }}"
+            dest: /home/ladder/programming-ladder
+
+      - name: Install systemd script
+        become: yes
+        become_user: root
+        copy:
+            src: ladder.service
+            dest: /etc/systemd/system/ladder.service
+
+      - name: Reload available daemons
+        become: yes
+        become_user: root
+        command: systemctl daemon-reload
+        changed_when: no
+
+      - name: Configure port forwarding
+        become: yes
+        become_user: root
+        iptables:
+            table: nat
+            chain: PREROUTING
+            in_interface: eth0
+            protocol: tcp
+            match: tcp
+            destination_port: 80
+            to_ports: 3000
+            jump: REDIRECT
+
+      - name: Start programming ladder
+        service:
+            name: ladder
+            state: started

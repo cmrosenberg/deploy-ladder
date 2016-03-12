@@ -1,0 +1,1 @@
+digitalocean ansible_host=198.199.125.234 ansible_ssh_user=root
