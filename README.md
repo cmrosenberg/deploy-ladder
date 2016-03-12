@@ -6,6 +6,20 @@ This repository contains scripts and instructions for deploying
 
 # Prelminaries
 
+## Install Ansible on your local machine
+
+Consult the [Ansible documentation](https://docs.ansible.com/ansible/intro_installation.html)
+for details. I recommend installing Ansible via pip: `pip install ansible`.
+
+## (Optional) Create a ready-made database import for the assignments
+
+You can save yourself some manual labor by preparing a file called
+`populate_db.coffee` (See `populate_db.coffee.example`) with your
+problem set. Ansible will check if this file exists, and if so install
+the problem set correctly. If you don't make this file, you will have
+to manually insert the problem set yourself, which is tedious and
+error-prone.
+
 ## Create an SSH keypair
 
 Example:
