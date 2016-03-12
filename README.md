@@ -83,6 +83,12 @@ The first time you run Programming Ladder, log in. The user you create
 will be the administrator user when you restart programming ladder. To
 restart programming ladder, type `service ladder restart`.
 
+### Disable problem solving
+
+At the time of writing, you have to disable problem solving in the admin
+panel to prevent people to solve problems. Click on the system icon on the
+bottom right corner, and toggle the lock icon so it has a red background.
+
 ## Monitor the process
 
 SSH into the server, and then Run

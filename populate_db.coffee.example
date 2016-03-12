@@ -1,0 +1,14 @@
+Meteor.startup ->
+  if Problems.find().count() is 0
+    Problems.insert
+      title: "Hello World"
+      solution: "Hello World"
+      answers: []
+      draft: false
+      activeFrom: new Date
+      description: "Write `Hello World` into the answer box"
+
+  # If we only have one user. Make him admin!
+  if Meteor.users.find().count() is 1
+    Meteor.users.update {}, {$set: {isAdmin: true}}
+

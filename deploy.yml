@@ -58,6 +58,22 @@
         git:
             repo: "{{ ladder_url }}"
             dest: /home/ladder/programming-ladder
+            update: no
+
+      - name: Check if a custom database insertion file exists
+        stat:
+            path: populate_db.coffee
+        register: has_custom_db_insertion
+        delegate_to: localhost
+
+      - name: Upload custom data insertion file
+        become: yes
+        become_user: ladder
+        copy:
+            src: populate_db.coffee
+            dest: /home/ladder/programming-ladder/server/populate_db.coffee
+        when: has_custom_db_insertion.stat.exists
+
 
       - name: Install systemd script
         become: yes
