@@ -3,7 +3,6 @@
   vars:
       ladder_url: https://github.com/MAPSuio/programming-ladder.git
   tasks:
-
       - name: Install system dependencies
         become: yes
         become_user: root
@@ -13,6 +12,21 @@
         with_items:
             - curl
             - git
+            - ntp
+
+      - name: Set correct timezone
+        become: yes
+        become_user: root
+        template:
+            src: timezone.j2
+            dest: /etc/timezone
+        register: set_timezone
+
+      - name: Run dpkg-reconfigure in response to changed timezone
+        become: yes
+        become_user: root
+        command: dpkg-reconfigure -f noninteractive tzdata
+        when: set_timezone.changed
 
       - name: Add a regular user for running programming ladder
         become: yes
