@@ -106,6 +106,11 @@ bottom right corner, and toggle the lock icon so it has a red background.
 ## Monitor the process
 
 SSH into the server, and then Run
-* `service ladder status` to inspect the log
-* `service ladder stop` to stop the service
-* `service ladder start` to start the service
+* `service ladder status` to check the status of ther process.
+* `service ladder stop` to stop the service.
+* `service ladder start` to start the service.
+* `journalctl -u ladder` to check the log output.
+
+## License
+
+All code in this repository is licensed under the MIT License, see LICENSE.txt
