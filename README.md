@@ -92,6 +92,13 @@ root@programming-ladder:~# apt-get install python
 Copy `hosts.example` to `hosts`, and replace the IP address in `ansible_host`
 with the IP address of your Droplet.
 
+If you haven't done so already, now is the time to add your private key to
+your SSH agent. This is needed for Ansible to function properly:
+
+```
+ssh-add ~/.ssh/digitalocean
+```
+
 Test your connection by issuing the following command:
 
 ```
