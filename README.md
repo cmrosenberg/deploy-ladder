@@ -16,9 +16,34 @@ for details. I recommend installing Ansible via pip: `pip install ansible`.
 You can save yourself some manual labor by preparing a file called
 `populate_db.coffee` (See `populate_db.coffee.example`) with your
 problem set. Ansible will check if this file exists, and if so install
-the problem set correctly. If you don't make this file, you will have
-to manually insert the problem set yourself, which is tedious and
-error-prone.
+the problem set correctly. 
+
+The database import specifies:
+    - The start time of the contest
+    - The problem descriptions and answers
+
+You can use `create_contest_db.py` to generate this database import.
+You use the script by pointing it to a directory with the following structure
+
+```txt
+problem_a_dir
+    README.md (contains the problem description)
+    answer.md (contains the answer)
+problem_b_dir
+    README.md
+    answer.md
+problem_c_dir
+    README.md
+    answer.md
+...
+```
+As an example of this, have a look at [MAPS Spring Challenge 2016](https://github.com/MAPSuio/spring-challenge16).
+
+Example invocation:
+
+```sh
+$ ./create_contest_db.py --directory ../spring-challenge17/
+```
 
 ## Create an SSH keypair
 
